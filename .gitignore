@@ -1,0 +1,36 @@
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Build
+bin/
+obj/
+
+# Rider
+.idea/
+
+# Logs
+*.log
+
+# Local history
+.localhistory/
+
+# User-specific files
+*.rsuser
+*.cache
+
+# Docker
+docker-compose.*.yml
+**/docker-compose.*.yml
+
+# NuGet
+*.nupkg
+# Microsoft Azure Web App publish settings
+*.PublishSettings
+
+# Others
+dist/
+node_modules/

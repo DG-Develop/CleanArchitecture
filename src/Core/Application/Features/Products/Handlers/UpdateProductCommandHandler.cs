@@ -1,8 +1,9 @@
 using MediatR;
-using ECommerce.Domain.Features.Products;
+using ECommerce.Domain.EcommerceDbEntities;
 using System.Threading;
 using System.Threading.Tasks;
 using ECommerce.Application.Features.Products.Commands;
+using ECommerce.Domain.Interfaces;
 
 namespace ECommerce.Application.Features.Products.Handlers
 {
@@ -23,7 +24,9 @@ namespace ECommerce.Application.Features.Products.Handlers
         throw new KeyNotFoundException($"Product with Id {request.Id} not found.");
       }
 
-      product.Update(request.Name, request.Description, request.Price);
+        product.Name = request.Name;
+        product.Description = request.Description;  
+        product.Price = request.Price;
       await _repository.UpdateAsync(product);
       return Unit.Value;
     }

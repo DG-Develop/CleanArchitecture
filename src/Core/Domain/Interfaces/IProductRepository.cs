@@ -19,9 +19,11 @@ namespace ECommerce.Domain.Interfaces
         Task<IReadOnlyList<Product>> GetAllAsyn();
 
         IQueryable<Product> GetAllQueryable();
-      
+
         #endregion
 
+        //join
+        Task<ProductResultDTO> GetProductJoinCoinById(int idProduct);
 
 
         //Filters dynamics or where
@@ -32,11 +34,15 @@ namespace ECommerce.Domain.Interfaces
         //JOINS
         IQueryable<Product> GetByFilterInclude(Expression<Func<Product, bool>> criterio, params Expression<Func<Product, object>>[] includes);
 
+        Task<List<ProductResultDTO>> GetProductsFilterAsync(ProductFilterValue filter);
 
         Task<IReadOnlyList<ProductDetailValueJoin>> GetResultFromSQL();
 
         Task<Product?> AddAsync(Product product);
 
+
+        //SP's
+        Task<IReadOnlyList<Product>> GetResultFromDapper();
 
         #region not implemented
         Task<Product?> GetByIdAsync(int id);

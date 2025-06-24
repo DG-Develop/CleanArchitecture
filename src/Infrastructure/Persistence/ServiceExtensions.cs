@@ -17,6 +17,13 @@ namespace ECommerce.Persistence
                 //.UseLazyLoadingProxies() // <----- HERE
                 .UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
+            var connectionString = configuration.GetConnectionString("DefaultConnection");
+            services.AddSingleton(connectionString); // Inyecta la cadena de conexión como string
+
+
+            //services.Configure<ApplicationSettingsDTO>(configuration.GetConnectionString("DefaultConnection"));
+            //var connectionStrings = builder.Configuration.GetSection("ConnectionStrings").Get<CadenasConexionDbDTO>()!;
+
             services.AddScoped(typeof(IGenericRepository<>), typeof (GenericRepository<>));
             services.AddScoped<IProductRepository, ProductRepository>();
             return services;

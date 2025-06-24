@@ -40,13 +40,8 @@ namespace ECommerce.Application.Features.Products.Handlers
             Console.WriteLine($"/**************************************************/");
             Console.WriteLine($"                                                   ");
             IQueryable<Product> productQuery =  _repository.GetAllQueryable();
-            // Example filter
-            productQuery = productQuery.Where(coin => coin.IdCoin == 2);
-            productQuery = productQuery.Where(p => p.Price > 30 && p.Price < 40);
-
             List<Product> filteredProducts =  productQuery.ToList();
-
-
+            
             Console.WriteLine($"filteredProductsAsQuery FINISH");
             Console.WriteLine($"/**************************************************/");
 
@@ -62,8 +57,12 @@ namespace ECommerce.Application.Features.Products.Handlers
             Console.WriteLine($"/**************************************************/");
 
 
-
-
+            Console.WriteLine($"/**************************************************/");
+            Console.WriteLine($"                                                    ");
+            int idProduct = 5;
+            ProductResultDTO productResult = await _repository.GetProductJoinCoinById(idProduct);
+            Console.WriteLine($"JOIN FINISH");
+            Console.WriteLine($"/**************************************************/");
 
 
 
@@ -95,6 +94,8 @@ namespace ECommerce.Application.Features.Products.Handlers
             IReadOnlyList<ProductDetailValueJoin> readOnlylistFromSql = await _repository.GetResultFromSQL();
 
 
+
+            IReadOnlyList<Product> readOnlyListProductFromSql = await _repository.GetResultFromDapper();
 
 
 

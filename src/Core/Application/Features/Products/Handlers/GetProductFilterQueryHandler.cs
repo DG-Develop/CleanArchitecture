@@ -27,7 +27,7 @@ namespace ECommerce.Application.Features.Products.Handlers
         public async Task<List<ProductResultDTO>?> Handle(GetProductFilterQuery request, CancellationToken cancellationToken)
         {
             // Get products based on the filter criteria
-            ProductFilterValue filterValue =  _mapper.Map<ProductFilterValue>(request);
+            ProductFilterValue filterValue =  _mapper.Map<ProductFilterValue>(request.query);
             List<ProductResultDTO> listProducts = await _repository.GetProductsFilterAsync(filterValue);
             
             // Return the filtered product list

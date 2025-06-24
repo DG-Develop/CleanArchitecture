@@ -1,6 +1,6 @@
 using MediatR;
-using ECommerce.Application.DTOs.Products;
 using ECommerce.Domain.EcommerceDbEntities;
+using ECommerce.Application.Features.Products.DTOS;
 
 namespace ECommerce.Application.Features.Products.Queries
 {

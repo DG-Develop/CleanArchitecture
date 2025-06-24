@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ECommerce.Application.DTOs.Products
+namespace ECommerce.Application.Features.Products.DTOS
 {
     public class PaginationProductsDTO
     {

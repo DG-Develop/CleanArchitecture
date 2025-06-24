@@ -1,5 +1,4 @@
 using Dapper;
-using ECommerce.Application.DTOs.Products;
 using ECommerce.Domain;
 using ECommerce.Domain.EcommerceDbEntities;
 using ECommerce.Domain.Interfaces;

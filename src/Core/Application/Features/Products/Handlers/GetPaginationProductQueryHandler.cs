@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using ECommerce.Application.DTOs.Products;
+using ECommerce.Application.Features.Products.DTOS;
 using ECommerce.Application.Features.Products.Queries;
 using ECommerce.Domain.EcommerceDbEntities;
 using ECommerce.Domain.Interfaces;

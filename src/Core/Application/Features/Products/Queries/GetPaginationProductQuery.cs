@@ -1,5 +1,4 @@
-﻿
-using ECommerce.Application.DTOs.Products;
+﻿using ECommerce.Application.Features.Products.DTOS;
 using ECommerce.Domain.EcommerceDbEntities;
 using MediatR;
 

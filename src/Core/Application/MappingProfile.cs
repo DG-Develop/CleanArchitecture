@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using ECommerce.Application.DTOs.Products;
+using ECommerce.Application.Features.Products.DTOS;
 using ECommerce.Application.Features.Products.Queries;
 using ECommerce.Domain.EcommerceDbEntities;
 using ECommerce.Domain.ValueObject.Products;
@@ -18,7 +18,7 @@ namespace ECommerce.Application
             CreateMap<Product, PaginationProductsDTO>()
                .ForMember(dest => dest.IdCoin, opt => opt.Ignore());
 
-            CreateMap<GetProductFilterQuery, ProductFilterValue>();
+            CreateMap<GetProductParametersDTO, ProductFilterValue>();
         }
     }
 }

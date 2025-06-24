@@ -5,6 +5,7 @@ using ECommerce.Application.Features.Products.Queries;
 using ECommerce.Domain.EcommerceDbEntities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using ECommerce.Application.Features.Products.DTOS;
 
 namespace ECommerce.API.API.Controllers
 {
@@ -31,6 +32,13 @@ namespace ECommerce.API.API.Controllers
         public async Task<ActionResult<IEnumerable<Product>>> GetAll()
         {
             var products = await _mediator.Send(new GetAllProductsQuery());
+            return Ok(products);
+        }
+
+        [HttpGet("GetProductFilter")]
+        public async Task<ActionResult<IEnumerable<Product>>> GetProductFilter([FromQuery] GetProductParametersDTO parametersDTO)
+        {
+            var products = await _mediator.Send(new GetProductFilterQuery(parametersDTO));
             return Ok(products);
         }
 

@@ -1,7 +1,5 @@
-﻿using ECommerce.Application.DTOs.Products;
-using ECommerce.Domain.EcommerceDbEntities;
+﻿using ECommerce.Domain.EcommerceDbEntities;
 using Microsoft.EntityFrameworkCore;
-using ECommerce.Application.DTOs.Products;
 using System;
 using System.Collections.Generic;
 

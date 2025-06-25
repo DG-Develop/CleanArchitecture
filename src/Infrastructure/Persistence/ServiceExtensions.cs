@@ -2,7 +2,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using ECommerce.Persistence.Repositories;
-using ECommerce.Domain.Features.Products;
+using ECommerce.Domain.Interfaces;
+using ECommerce.Domain;
+using ECommerce.Persistence.ECommerceDbContext;
 
 namespace ECommerce.Persistence
 {
@@ -10,9 +12,22 @@ namespace ECommerce.Persistence
     {
         public static IServiceCollection AddPersistenceServices(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<EcommerceDbContext>(options =>
+                options
+                .UseLazyLoadingProxies() // <----- HERE
+                .UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+
+            var connectionString = configuration.GetConnectionString("DefaultConnection");
+            services.AddSingleton(connectionString); // Inyecta la cadena de conexión como string
+
+
+            //services.Configure<ApplicationSettingsDTO>(configuration.GetConnectionString("DefaultConnection"));
+            //var connectionStrings = builder.Configuration.GetSection("ConnectionStrings").Get<CadenasConexionDbDTO>()!;
+
+            // ID Repositories
+            services.AddScoped(typeof(IGenericRepository<>), typeof (GenericRepository<>));
             services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<ICatProductsType, CatProducsTypeRepository>();
             return services;
         }
     }

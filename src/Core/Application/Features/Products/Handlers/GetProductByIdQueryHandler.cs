@@ -1,23 +1,33 @@
+using AutoMapper;
+using ECommerce.Application.Features.Products.DTOS;
+using ECommerce.Application.Features.Products.Queries;
+using ECommerce.Domain.EcommerceDbEntities;
+using ECommerce.Domain.Interfaces;
 using MediatR;
-using ECommerce.Domain.Features.Products;
 using System.Threading;
 using System.Threading.Tasks;
-using ECommerce.Application.Features.Products.Queries;
 
 namespace ECommerce.Application.Features.Products.Handlers
 {
-    public class GetProductByIdQueryHandler : IRequestHandler<GetProductByIdQuery, Product?>
+    public class GetProductByIdQueryHandler : IRequestHandler<GetProductByIdQuery, PaginationProductsDTO?>
     {
-        private readonly IProductRepository _repository;
+        private readonly IGenericRepository<Product> _genericRepository;
+        private readonly IMapper _mapper;
 
-        public GetProductByIdQueryHandler(IProductRepository repository)
+
+        public GetProductByIdQueryHandler( IGenericRepository<Product> iGenericRepository, IMapper iMapper)
         {
-            _repository = repository;
+           
+            _genericRepository = iGenericRepository;
+            _mapper = iMapper;
         }
 
-        public async Task<Product?> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
+        public async Task<PaginationProductsDTO?> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
         {
-            return await _repository.GetByIdAsync(request.Id);
+            Product product = new Product();
+            product = await _genericRepository.GetById(request.Id);
+
+            return _mapper.Map<PaginationProductsDTO>(product);
         }
     }
 }

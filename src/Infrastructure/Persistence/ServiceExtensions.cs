@@ -14,7 +14,7 @@ namespace ECommerce.Persistence
         {
             services.AddDbContext<EcommerceDbContext>(options =>
                 options
-                //.UseLazyLoadingProxies() // <----- HERE
+                .UseLazyLoadingProxies() // <----- HERE
                 .UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
             var connectionString = configuration.GetConnectionString("DefaultConnection");
@@ -24,8 +24,10 @@ namespace ECommerce.Persistence
             //services.Configure<ApplicationSettingsDTO>(configuration.GetConnectionString("DefaultConnection"));
             //var connectionStrings = builder.Configuration.GetSection("ConnectionStrings").Get<CadenasConexionDbDTO>()!;
 
+            // ID Repositories
             services.AddScoped(typeof(IGenericRepository<>), typeof (GenericRepository<>));
             services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<ICatProductsType, CatProducsTypeRepository>();
             return services;
         }
     }

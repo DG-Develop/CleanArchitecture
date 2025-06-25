@@ -15,7 +15,7 @@ namespace ECommerce.Persistence.Repositories
 {
     public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {
-        private readonly EcommerceDbContext _context;
+        protected readonly EcommerceDbContext _context;
         
         public GenericRepository(EcommerceDbContext context)
         {
@@ -44,7 +44,7 @@ namespace ECommerce.Persistence.Repositories
 
 
 
-        public async Task<TEntity?> AddAsync(TEntity entidad)
+        public virtual async Task<TEntity?> AddAsync(TEntity entidad)
         {
             await _context.Set<TEntity>().AddAsync(entidad);
             await _context.SaveChangesAsync();

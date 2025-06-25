@@ -105,6 +105,8 @@ namespace ECommerce.Persistence.Repositories
         #region filters dynamics or where
         public IQueryable<Product> GetByFilter(Expression<Func<Product, bool>> criterio)
             {
+                decimal price =   _context.Set<Product>().AsQueryable().Where(criterio).Sum(x=> x.Price);
+                var price_ =   _context.Set<Product>().AsQueryable().Where(criterio).GroupBy(g => new { g.IdCoin, g.Description, g.Price } ).Select(x => new { priceTotal = x.Sum(x => x.Price) , x.Key.IdCoin });
                 return _context.Set<Product>().AsQueryable().Where(criterio);
             }
 

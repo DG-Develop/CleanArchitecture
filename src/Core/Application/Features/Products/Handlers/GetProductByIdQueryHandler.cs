@@ -26,6 +26,7 @@ namespace ECommerce.Application.Features.Products.Handlers
         {
             Product product = new Product();
             product = await _genericRepository.GetById(request.Id);
+
             return _mapper.Map<PaginationProductsDTO>(product);
         }
     }

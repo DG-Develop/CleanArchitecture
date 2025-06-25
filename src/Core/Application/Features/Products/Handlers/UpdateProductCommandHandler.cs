@@ -10,15 +10,17 @@ namespace ECommerce.Application.Features.Products.Handlers
   public class UpdateProductCommandHandler : IRequestHandler<UpdateProductCommand, Unit>
   {
     private readonly IProductRepository _repository;
+    private readonly IGenericRepository<Product> _repositoryGeneric;
 
-    public UpdateProductCommandHandler(IProductRepository repository)
+    public UpdateProductCommandHandler(IProductRepository repository, IGenericRepository<Product> genericRepository)
     {
       _repository = repository;
+            _repositoryGeneric = genericRepository;
     }
 
     public async Task<Unit> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
     {
-      var product = await _repository.GetByIdAsync(request.Id);
+      var product = await _repositoryGeneric.GetById(request.Id);
       if (product is null)
       {
         throw new KeyNotFoundException($"Product with Id {request.Id} not found.");
@@ -27,7 +29,7 @@ namespace ECommerce.Application.Features.Products.Handlers
         product.Name = request.Name;
         product.Description = request.Description;  
         product.Price = request.Price;
-      await _repository.UpdateAsync(product);
+      await _repositoryGeneric.UpdateAsync(product);
       return Unit.Value;
     }
   }

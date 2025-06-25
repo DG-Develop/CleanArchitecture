@@ -29,11 +29,11 @@ namespace ECommerce.Application.Features.Products.Handlers
             //Querys e IQueryables 
 
             //memory
-            Console.WriteLine($"/**************************************************/");
-            Console.WriteLine($"                                                   ");
-            IReadOnlyList<Product> listProducts =  await _repository.GetAllAsyn();
-            Console.WriteLine($"listProducts FINISH");
-            Console.WriteLine($"/**************************************************/");
+            //Console.WriteLine($"/**************************************************/");
+            //Console.WriteLine($"                                                   ");
+            //IReadOnlyList<Product> listProducts =  await _repository.GetAllAsyn();
+            //Console.WriteLine($"listProducts FINISH");
+            //Console.WriteLine($"/**************************************************/");
 
 
             //memory
@@ -48,21 +48,21 @@ namespace ECommerce.Application.Features.Products.Handlers
 
 
 
-            //GetByFilter
-            Console.WriteLine($"/**************************************************/");
-            Console.WriteLine($"                                                   ");
-            IQueryable<Product> GetByFilter =  _repository.GetByFilter(p => p.Price > 30);
-            var filteredProductsByFilter = GetByFilter.ToList();
-            Console.WriteLine($"GetByFilter FINISH");
-            Console.WriteLine($"/**************************************************/");
+            ////GetByFilter
+            //Console.WriteLine($"/**************************************************/");
+            //Console.WriteLine($"                                                   ");
+            //IQueryable<Product> GetByFilter =  _repository.GetByFilter(p => p.Price > 30);
+            //var filteredProductsByFilter = GetByFilter.ToList();
+            //Console.WriteLine($"GetByFilter FINISH");
+            //Console.WriteLine($"/**************************************************/");
 
 
-            Console.WriteLine($"/**************************************************/");
-            Console.WriteLine($"                                                    ");
-            int idProduct = 5;
-            ProductResultDTO productResult = await _repository.GetProductJoinCoinById(idProduct);
-            Console.WriteLine($"JOIN FINISH");
-            Console.WriteLine($"/**************************************************/");
+            //Console.WriteLine($"/**************************************************/");
+            //Console.WriteLine($"                                                    ");
+            //int idProduct = 5;
+            //ProductResultDTO productResult = await _repository.GetProductJoinCoinById(idProduct);
+            //Console.WriteLine($"JOIN FINISH");
+            //Console.WriteLine($"/**************************************************/");
 
 
 
@@ -78,14 +78,16 @@ namespace ECommerce.Application.Features.Products.Handlers
             //Console.WriteLine($"/**************************************************/");
 
 
-            //Console.WriteLine($"/**************************************************/");
-            //Console.WriteLine($"Lazy Loading");
-            //IQueryable<Product> productQueryLazy = _repository.GetAllQueryable();
-            //List<Product> listProductTop10_Lazy = productQueryLazy.OrderByDescending(x => x.Id).Take(10).ToList();
+            Console.WriteLine($"/**************************************************/");
+            Console.WriteLine($"Lazy Loading");
+            IQueryable<Product> productQueryLazy = _repository.GetAllQueryable();
+            List<Product> listProductTop10_Lazy = productQueryLazy.OrderByDescending(x => x.Id).Take(10).ToList();
 
-            //string? nameCoin = listProductTop10_Lazy[0].IdCoinNavigation?.Name;
-            //Console.WriteLine($"Lazy Loading - NAME: {nameCoin}");
-            //Console.WriteLine($"/**************************************************/");
+            /** negocio */
+
+            string? nameCoin = listProductTop10_Lazy[0].IdCoinNavigation?.Name;
+            Console.WriteLine($"Lazy Loading - NAME: {nameCoin}");
+            Console.WriteLine($"/**************************************************/");
 
 
             /******************************************************************************/

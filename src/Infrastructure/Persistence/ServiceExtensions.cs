@@ -1,10 +1,9 @@
-using Microsoft.Extensions.DependencyInjection;
+using ECommerce.Domain.Interfaces;
+using ECommerce.Persistence.ECommerceDbContext;
+using ECommerce.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using ECommerce.Persistence.Repositories;
-using ECommerce.Domain.Interfaces;
-using ECommerce.Domain;
-using ECommerce.Persistence.ECommerceDbContext;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace ECommerce.Persistence
 {
@@ -26,8 +25,6 @@ namespace ECommerce.Persistence
 
             // ID Repositories
             services.AddScoped(typeof(IGenericRepository<>), typeof (GenericRepository<>));
-            services.AddScoped<IProductRepository, ProductRepository>();
-            services.AddScoped<ICatProductsType, CatProducsTypeRepository>();
             return services;
         }
     }

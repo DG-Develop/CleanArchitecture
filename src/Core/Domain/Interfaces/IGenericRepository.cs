@@ -35,6 +35,7 @@ namespace ECommerce.Domain.Interfaces
         IQueryable<T> GetByFilter(Expression<Func<T, bool>> criterio);
 
 
+        IQueryable<T> GetByFilterInclude(Expression<Func<T, bool>> criterio, params Expression<Func<T, object>>[] includes);
 
 
 

@@ -41,6 +41,24 @@ namespace ECommerce.Persistence.Repositories
         }
 
 
+        public IQueryable<TEntity> GetByFilterInclude(Expression<Func<TEntity, bool>> criterio, params Expression<Func<TEntity, object>>[] includes)
+        {
+            IQueryable<TEntity> query = _context.Set<TEntity>();
+
+            // Aplicar los Includes si es necesario
+            if (includes != null)
+            {
+                foreach (var include in includes)
+                {
+                    query = query.Include(include);
+                }
+            }
+
+            // Retornar el IQueryable con los filtros aplicados
+            return query.Where(criterio);
+        }
+
+
 
 
 

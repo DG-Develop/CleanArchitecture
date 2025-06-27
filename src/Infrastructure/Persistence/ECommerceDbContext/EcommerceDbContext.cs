@@ -1,7 +1,7 @@
-﻿using ECommerce.Domain.EcommerceDbEntities;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using ECommerce.Domain.EcommerceDbEntities;
+using Microsoft.EntityFrameworkCore;
 
 namespace ECommerce.Persistence.ECommerceDbContext;
 
@@ -18,11 +18,17 @@ public partial class EcommerceDbContext : DbContext
 
     public virtual DbSet<CatCoin> CatCoins { get; set; }
 
+    public virtual DbSet<CatPaymentType> CatPaymentTypes { get; set; }
+
     public virtual DbSet<CatProductsType> CatProductsTypes { get; set; }
 
     public virtual DbSet<Product> Products { get; set; }
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) { }
 
+    public virtual DbSet<Sale> Sales { get; set; }
+
+    public virtual DbSet<SaleDetail> SaleDetails { get; set; }
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) { }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -45,6 +51,15 @@ public partial class EcommerceDbContext : DbContext
                 .IsFixedLength();
         });
 
+        modelBuilder.Entity<CatPaymentType>(entity =>
+        {
+            entity.HasKey(e => e.IdPaymentType);
+
+            entity.ToTable("Cat_PaymentTypes");
+
+            entity.Property(e => e.Description).HasMaxLength(50);
+        });
+
         modelBuilder.Entity<CatProductsType>(entity =>
         {
             entity.HasKey(e => e.IdCatProductType).HasName("PK_Cat_ProductType");
@@ -56,6 +71,8 @@ public partial class EcommerceDbContext : DbContext
 
         modelBuilder.Entity<Product>(entity =>
         {
+            entity.HasKey(e => e.IdProduct);
+
             entity.Property(e => e.Description).HasMaxLength(500);
             entity.Property(e => e.Name).HasMaxLength(100);
             entity.Property(e => e.Price).HasColumnType("decimal(18, 2)");
@@ -64,6 +81,37 @@ public partial class EcommerceDbContext : DbContext
                 .HasForeignKey(d => d.IdCoin)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Products_Cat_Coins");
+        });
+
+        modelBuilder.Entity<Sale>(entity =>
+        {
+            entity.HasKey(e => e.IdSale);
+
+            entity.Property(e => e.Date).HasColumnType("datetime");
+            entity.Property(e => e.Total).HasColumnType("decimal(18, 2)");
+
+            entity.HasOne(d => d.IdPaymentTypeNavigation).WithMany(p => p.Sales)
+                .HasForeignKey(d => d.IdPaymentType)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Sales_Cat_PaymentTypes");
+        });
+
+        modelBuilder.Entity<SaleDetail>(entity =>
+        {
+            entity.HasKey(e => e.IdSaleDetails);
+
+            entity.Property(e => e.PriceOrigin).HasColumnType("decimal(18, 2)");
+            entity.Property(e => e.Total).HasColumnType("decimal(18, 2)");
+
+            entity.HasOne(d => d.IdProductNavigation).WithMany(p => p.SaleDetails)
+                .HasForeignKey(d => d.IdProduct)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_SaleDetails_Products");
+
+            entity.HasOne(d => d.IdSaleNavigation).WithMany(p => p.SaleDetails)
+                .HasForeignKey(d => d.IdSale)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_SaleDetails_Sales");
         });
 
         OnModelCreatingPartial(modelBuilder);

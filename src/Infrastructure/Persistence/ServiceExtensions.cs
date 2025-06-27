@@ -13,7 +13,7 @@ namespace ECommerce.Persistence
         {
             services.AddDbContext<EcommerceDbContext>(options =>
                 options
-                .UseLazyLoadingProxies() // <----- HERE
+                //.UseLazyLoadingProxies() // <----- HERE
                 .UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
             var connectionString = configuration.GetConnectionString("DefaultConnection");

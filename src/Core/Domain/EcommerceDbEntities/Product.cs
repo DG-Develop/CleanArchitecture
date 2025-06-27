@@ -5,7 +5,7 @@ namespace ECommerce.Domain.EcommerceDbEntities;
 
 public partial class Product
 {
-    public int Id { get; set; }
+    public int IdProduct { get; set; }
 
     public string Name { get; set; } = null!;
 
@@ -20,4 +20,6 @@ public partial class Product
     public bool Active { get; set; }
 
     public virtual CatCoin IdCoinNavigation { get; set; } = null!;
+
+    public virtual ICollection<SaleDetail> SaleDetails { get; set; } = new List<SaleDetail>();
 }

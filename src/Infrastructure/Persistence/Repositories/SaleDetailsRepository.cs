@@ -62,30 +62,48 @@ namespace ECommerce.Persistence.Repositories
         }
 
 
-        public async Task<List<SaleDetail>> GetSaleDetailsByIdVentaListIdProducts(List<int> idSaleVenta) 
+        public async Task<List<SaleDetail>> GetSaleDetailsByIdSaleDetails(List<int> idSaleDetails, bool AsTracking = false) 
         {
             IQueryable<SaleDetail> querySaleDetails = _context.SaleDetails.AsQueryable();
-            // Filter by IdSale
-            querySaleDetails = querySaleDetails.Where(x => idSaleVenta.Contains(x.IdSaleDetails) );
-            return await querySaleDetails.ToListAsync();
+            if (!AsTracking)
+            {
+                querySaleDetails = querySaleDetails.AsNoTracking();
+            }
 
+            querySaleDetails = querySaleDetails.Where(x => idSaleDetails.Contains(x.IdSaleDetails) );
+            return await querySaleDetails.ToListAsync();
         }
 
 
-        public async Task<List<SaleDetail>> GetSaleDetailsByIdVentaListIdProducts(int idVenta, List<int> listIdProducts = null)
+        public async Task<List<SaleDetail>> GetSaleDetailsByIdVentaListIdProducts(int idSale, List<int> listIdProducts = null , bool AsTracking = false)
         {
             IQueryable<SaleDetail> querySaleDetails = _context.SaleDetails.AsQueryable();
 
-            if (listIdProducts != null && listIdProducts.Count > 1)
+            // If AsTracking is false, we use AsNoTracking to improve performance
+            if (!AsTracking)
             {
-                querySaleDetails = querySaleDetails.Where(x => listIdProducts.Contains(x.IdProduct));
-            }
-            else 
-            {
-                // If listIdProducts is null or has only one element, we can skip this filter
-                querySaleDetails = querySaleDetails.Where(x => x.IdProduct == listIdProducts.FirstOrDefault());
+                querySaleDetails = querySaleDetails.AsNoTracking();
             }
 
+            if (idSale > 0 && listIdProducts == null) 
+            {
+                // Filter by IdSale
+                querySaleDetails = querySaleDetails.Where(x => x.IdSale == idSale);
+            }
+
+
+            if (listIdProducts != null )
+            {
+                if (listIdProducts.Count > 1) 
+                {
+                    querySaleDetails = querySaleDetails.Where(x => listIdProducts.Contains(x.IdProduct));
+                }
+                else 
+                {
+                    // If listIdProducts is null or has only one element, we can skip this filter
+                    querySaleDetails = querySaleDetails.Where(x => x.IdProduct == listIdProducts.FirstOrDefault());
+                }
+            }
 
             return await querySaleDetails.ToListAsync();
         }

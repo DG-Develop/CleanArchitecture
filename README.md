@@ -89,4 +89,4 @@
 ¡Listo para desarrollar y probar tu ECommerce API! 🚀
 
 ## Base de datos para las pruebas
-https://drive.google.com/file/d/1EwvXnhCN06OLRQGfKQ5iyfyM7-YT68fu/view?usp=sharing
+https://drive.google.com/drive/folders/105Xy_P82ySQn8Q7_KPpry0bSBor1ly-K?usp=sharing

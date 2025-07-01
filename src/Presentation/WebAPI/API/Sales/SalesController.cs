@@ -1,4 +1,6 @@
-﻿using ECommerce.Application.Features.SalesAgrregate.Queries;
+﻿using ECommerce.Application.Features.SalesAgrregate.Commands;
+using ECommerce.Application.Features.SalesAgrregate.Dtos.Request;
+using ECommerce.Application.Features.SalesAgrregate.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -26,6 +28,65 @@ namespace ECommerce.API.API.Sales
             var response = await _mediator.Send(new GetAllSalesQuery());
            
             return Ok(new { Message = "Lista de ventas", Data = response });
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetSaleByIdAsync(int id)
+        {
+
+            var response = await _mediator.Send(new GetAllSalesQuery()); // Replace with actual query for single sale
+            if (response == null)
+            {
+                return NotFound(new { Message = "Venta no encontrada" });
+            }
+            return Ok(new { Message = "Venta encontrada", Data = response });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateSaleAsync([FromBody] CreateSaleRequestDto request)
+        {
+            if (request == null)
+            {
+                return BadRequest(new { Message = "Datos de venta inválidos" });
+            }
+            var response = await _mediator.Send(new CreateSaleCommand(request.Amount, request.Total, request.PaymentTypeId));
+
+            return Created("", response);
+        }
+
+        [HttpPost("detail/{saleId}")]
+        public async Task<IActionResult> CreateSaleDetailAsync(int saleId, [FromBody] CreateDetailSaleRequestDto request)
+        {
+            if (request == null)
+            {
+                return BadRequest(new { Message = "Detalles de venta inválidos" });
+            }
+            
+            var response = await _mediator.Send(new CreateDetailSaleCommand(saleId, request.ProductId, request.Amount)); 
+            return Created("", response);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateSaleAsync(int id, [FromBody] List<UpdateSaleRequestDto> request)
+        {
+            if (request == null)
+            {
+                return BadRequest(new { Message = "Datos de venta inválidos" });
+            }
+            
+            var response = await _mediator.Send(new UpdateSaleCommand(id, request));
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteSaleAsync(int id)
+        {
+            var response = await _mediator.Send(new DeleteSaleCommand(id));
+            if (response == false)
+            {
+                return NotFound(new { Message = "Venta no encontrada" });
+            }
+            return NoContent();
         }
     }
 }

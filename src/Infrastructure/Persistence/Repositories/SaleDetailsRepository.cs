@@ -108,6 +108,15 @@ namespace ECommerce.Persistence.Repositories
             return await querySaleDetails.ToListAsync();
         }
 
+        public Task<List<SaleDetail>> GetSaleDetailsByIdVentaListIdProducts(List<int> idSaleVenta)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<SaleDetail>> GetSaleDetailsByIdVentaListIdProducts(int idVenta, List<int> listIdProducts = null)
+        {
+            throw new NotImplementedException();
+        }
     }
    
     

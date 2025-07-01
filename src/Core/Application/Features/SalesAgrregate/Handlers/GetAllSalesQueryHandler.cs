@@ -16,17 +16,23 @@ namespace ECommerce.Application.Features.SalesAgrregate.Handlers
 {
     public class GetAllSalesQueryHandler : IRequestHandler<GetAllSalesQuery, List<SalesDto>>
     {
+        private readonly ISaleDetailsRepository _SaleDetailsRepository;
         private readonly IGenericRepository<Sale> _repo;
         private readonly IMapper _mapper;
 
-        public GetAllSalesQueryHandler(IGenericRepository<Sale> repo, IMapper mapper)
+        public GetAllSalesQueryHandler(IGenericRepository<Sale> repo, IMapper mapper, ISaleDetailsRepository SaleDetailsRepository)
         {
             _repo = repo;
             _mapper = mapper;
+            _SaleDetailsRepository = SaleDetailsRepository;
         }
 
         public async Task<List<SalesDto>> Handle(GetAllSalesQuery request, CancellationToken cancellationToken)
         {
+            List<int> lista = new List<int> { 2, 3 }; 
+            List<SaleDetail> listsaleDetail = new List<SaleDetail>();
+            listsaleDetail = await _SaleDetailsRepository.GetSaleDetailsByIdVentaListIdProducts(lista);
+
             //IdPaymentTypeNavigation
             // Implements to get data from repository
             IQueryable<Sale> response = _repo.GetByFilterInclude(x => x.Active == true, include => include.IdPaymentTypeNavigation);

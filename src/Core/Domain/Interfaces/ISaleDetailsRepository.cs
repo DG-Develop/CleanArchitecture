@@ -14,7 +14,7 @@ namespace ECommerce.Domain.Interfaces
         /// </summary>
         /// <param name="entidad">Entity to be eliminated.</param>
         /// <returns>Not return info.</returns>
-        Task DeleteLogicAsync(SaleDetail deleteSaleDetail);
+        Task DeleteLogicSaleDetailsAsync(List<int> idsSaleDetails);
 
         /// <summary>
         /// save of multiple SaleDetails
@@ -24,9 +24,9 @@ namespace ECommerce.Domain.Interfaces
         /// <returns></returns>
         Task<int> SaveRangeAsync(List<SaleDetail> listSaleDetails);
 
-        Task<List<SaleDetail>> GetSaleDetailsByIdVentaListIdProducts(List<int> idSaleVenta);
+        Task<List<SaleDetail>> GetSaleDetailsByIdSaleDetails(List<int> idSaleDetails, bool AsTracking = false);
 
-        Task<List<SaleDetail>> GetSaleDetailsByIdVentaListIdProducts(int idVenta, List<int> listIdProducts = null);
+        Task<List<SaleDetail>> GetSaleDetailsByIdVentaListIdProducts(int idSale, List<int> listIdProducts = null, bool AsTracking = false);
 
     }
 }

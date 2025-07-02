@@ -31,7 +31,7 @@ namespace ECommerce.Application.Features.SalesAgrregate.Handlers
         {
             List<int> lista = new List<int> { 2, 3 }; 
             List<SaleDetail> listsaleDetail = new List<SaleDetail>();
-            listsaleDetail = await _SaleDetailsRepository.GetSaleDetailsByIdVentaListIdProducts(lista);
+            listsaleDetail = await _SaleDetailsRepository.GetSaleDetailsByIdVentaListIdProducts(2, lista, false);
 
             //IdPaymentTypeNavigation
             // Implements to get data from repository

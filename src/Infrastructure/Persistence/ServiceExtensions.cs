@@ -26,8 +26,12 @@ namespace ECommerce.Persistence
             // ID Repositories
             services.AddScoped(typeof(IGenericRepository<>), typeof (GenericRepository<>));
             services.AddScoped<ISaleDetailsRepository, SaleDetailsRepository>();
+            services.AddScoped<ISaleRepository, SaleRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
 
             
+
+
             return services;
         }
     }

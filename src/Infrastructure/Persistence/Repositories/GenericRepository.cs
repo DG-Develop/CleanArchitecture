@@ -62,7 +62,7 @@ namespace ECommerce.Persistence.Repositories
 
 
 
-        public virtual async Task<TEntity?> AddAsync(TEntity entidad)
+        public async Task<TEntity?> AddAsync(TEntity entidad)
         {
             await _context.Set<TEntity>().AddAsync(entidad);
             await _context.SaveChangesAsync();

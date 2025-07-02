@@ -21,17 +21,23 @@ namespace ECommerce.Persistence.Repositories
         {
             _context = context;
         }
-        
-        
+
+ 
+
+
         /// <summary>
         /// Logic eliminated
         /// </summary>
         /// <param name="entidad">Entity to be eliminated.</param>
         /// <returns>Not return info.</returns>
-        public async Task DeleteLogicAsync(SaleDetail deleteSaleDetail)
+        public async Task DeleteLogicSaleDetailsAsync(List<int> idsSaleDetails)
         {
-            deleteSaleDetail.Active = false;
-            _context.Entry(deleteSaleDetail).State = EntityState.Modified;
+            _context.SaleDetails.Where(x => idsSaleDetails.Contains(x.IdSaleDetails)).ToList().ForEach(deleteSaleDetail =>
+            {
+                deleteSaleDetail.Active = false;
+                _context.Entry(deleteSaleDetail).State = EntityState.Modified;
+            });
+
             await _context.SaveChangesAsync();
         }
 
@@ -108,15 +114,16 @@ namespace ECommerce.Persistence.Repositories
             return await querySaleDetails.ToListAsync();
         }
 
-        public Task<List<SaleDetail>> GetSaleDetailsByIdVentaListIdProducts(List<int> idSaleVenta)
-        {
-            throw new NotImplementedException();
-        }
 
-        public Task<List<SaleDetail>> GetSaleDetailsByIdVentaListIdProducts(int idVenta, List<int> listIdProducts = null)
-        {
-            throw new NotImplementedException();
-        }
+        //public Task<List<SaleDetail>> GetSaleDetailsByIdVentaListIdProducts(List<int> idSaleVenta)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //public Task<List<SaleDetail>> GetSaleDetailsByIdVentaListIdProducts(int idVenta, List<int> listIdProducts = null)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
    
     

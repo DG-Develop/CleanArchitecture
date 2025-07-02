@@ -66,26 +66,23 @@ namespace ECommerce.API.API.Sales
             return Created("", response);
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateSaleAsync(int id, [FromBody] List<UpdateSaleRequestDto> request)
+        [HttpPut("{saleId}")]
+        public async Task<IActionResult> UpdateSaleAsync(int saleId, [FromBody] List<UpdateSaleRequestDto> request)
         {
             if (request == null)
             {
                 return BadRequest(new { Message = "Datos de venta inválidos" });
             }
             
-            var response = await _mediator.Send(new UpdateSaleCommand(id, request));
+            var response = await _mediator.Send(new UpdateSaleCommand(saleId, request));
             return NoContent();
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteSaleAsync(int id)
+        [HttpDelete("{saleId}")]
+        public async Task<IActionResult> DeleteSaleAsync(int saleId)
         {
-            var response = await _mediator.Send(new DeleteSaleCommand(id));
-            if (response == false)
-            {
-                return NotFound(new { Message = "Venta no encontrada" });
-            }
+            var response = await _mediator.Send(new DeleteSaleCommand(saleId));
+
             return NoContent();
         }
     }

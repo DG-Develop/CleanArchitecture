@@ -19,6 +19,7 @@ namespace ECommerce.Application.Features.SalesAgrregate.Handlers
 
             var newSale = _mapper.Map<Sale>(request);
 
+            // Add Async
 
             throw new NotImplementedException();
         }

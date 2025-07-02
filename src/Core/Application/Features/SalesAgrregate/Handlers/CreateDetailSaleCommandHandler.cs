@@ -15,11 +15,15 @@ namespace ECommerce.Application.Features.SalesAgrregate.Handlers
 
         public Task<int> Handle(CreateDetailSaleCommand request, CancellationToken cancellationToken)
         {
-            // Obtener Producto por ProductId
+            // Obtener precio del  Producto por ProductId
 
             // Calcular Precio Total (Precio * Cantidad)
+            //var total =  request.Amount * precioOrigen
             //var detailSale = _mapper.Map<SaleDetail>(request);
-            //detailSale.Total = request.Amount * precioOrigen
+            //detailSale.Total = total
+            //deatilSale.PresioOrigen = producto.precioOrigen;
+
+            //AddASync
 
             throw new NotImplementedException();
         }

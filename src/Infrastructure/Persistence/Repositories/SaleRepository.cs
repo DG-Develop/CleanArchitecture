@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ECommerce.Persistence.Repositories
 {
-    public class SaleRepository: GenericRepository<Sale>, ISaleRepository
+    public class SaleRepository : GenericRepository<Sale>, ISaleRepository
     {
 
         private readonly EcommerceDbContext _context;
@@ -25,19 +25,21 @@ namespace ECommerce.Persistence.Repositories
         {
             var sales = await _context.Sales.Include(x => x.SaleDetails).FirstOrDefaultAsync(x => x.IdSale == idSale);
             sales.Active = false;
-            sales.SaleDetails.FirstOrDefault(x => x.Active = false);
+            sales.SaleDetails.ToList().ForEach(x => x.Active = false);
             await _context.SaveChangesAsync();
         }
 
         public async Task<Sale> GetSaleAndDetails(int idSale)
         {
-            return await _context.Sales.Include(x => x.SaleDetails).FirstOrDefaultAsync(x => x.IdSale == idSale);
+            return await _context.Sales
+                .Include(x => x.SaleDetails)
+                .FirstOrDefaultAsync(x => x.IdSale == idSale);
         }
 
 
         public async Task saveChangeAsync()
         {
-             await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
         }
 
     }

@@ -25,6 +25,11 @@ namespace ECommerce.Application.Features.SalesAgrregate.Handlers
             // Obtener precio del  Producto por ProductId
             var product = await _productRepository.GetById(request.ProductId);
 
+            if(product == null)
+            {
+                throw new KeyNotFoundException($"Producto con ID {request.ProductId} no encontrado.");
+            }
+
 
             // Calcular Precio Total (Precio * Cantidad)
             var total = request.Amount * product.Price;
@@ -33,8 +38,13 @@ namespace ECommerce.Application.Features.SalesAgrregate.Handlers
             detailSale.Total = total;
             detailSale.PriceOrigin = product.Price;
 
-            //AddASync
             var detailSaleSave = await _saleDetailsRepository.AddAsync(detailSale);
+
+            if(detailSaleSave == null)
+            {
+                throw new Exception("Error al guardar los detalles de la venta.");
+            }
+
             return detailSaleSave.IdSaleDetails;
         }
     }

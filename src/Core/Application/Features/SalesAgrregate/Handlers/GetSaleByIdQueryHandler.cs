@@ -21,14 +21,16 @@ namespace ECommerce.Application.Features.SalesAgrregate.Handlers
 
         public async Task<IdDetailSalesDto> Handle(GetSaleByIdQuery request, CancellationToken cancellationToken)
         {
-            Sale sale = await _saleRepository.GetById(request.IdSale);
+            Sale? sale = await _saleRepository.GetById(request.IdSale);
 
-            //var saleMapped = _mapper.Map<IdDetailSalesDto>(sale);
+            if(sale == null)
+            {
+                throw new KeyNotFoundException($"Sale with ID {request.IdSale} not found.");
+            }
 
+            var saleMapped = _mapper.Map<IdDetailSalesDto>(sale);
 
-            //return saleMapped;
-
-            throw new NotImplementedException();
+            return saleMapped;
         }
     }
 }

@@ -23,12 +23,14 @@ namespace ECommerce.Application.Features.SalesAgrregate.Handlers
 
             var newSale = _mapper.Map<Sale>(request);
 
-            // Add Async
-            Sale saleSave = await _SaleRepository.AddAsync(newSale);
+            Sale? saleSave = await _SaleRepository.AddAsync(newSale);
 
+            if(saleSave == null)
+            {
+                throw new Exception("Error al crear la venta");
+            }
 
-
-            throw new NotImplementedException();
+            return saleSave.IdSale;
         }
     }
 }

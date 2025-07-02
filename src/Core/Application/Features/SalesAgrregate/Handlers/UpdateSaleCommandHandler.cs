@@ -21,33 +21,50 @@ namespace ECommerce.Application.Features.SalesAgrregate.Handlers
             //Obtener los detalles de la venta filtrado por IdSale IdProduct
             // buscar por idSale 
             Sale sales = await _saleRepository.GetSaleAndDetails(request.SaleId);
-            //      public int ProductId { get; set; }
-            //public int Amount { get; set; }
-            List<int> listIdProducts = new List<int>();
-            foreach (var itemDetail in request.Details) 
-            {
-                var newSaleDetail = sales.SaleDetails.FirstOrDefault(x => x.IdProduct == itemDetail.ProductId);
 
-                if (newSaleDetail != null) 
-                {
-                    // Actualizar el detalle existente
-                    newSaleDetail.Amount = itemDetail.Amount;
-                    newSaleDetail.Total = itemDetail.Amount * newSaleDetail.PriceOrigin; // Recalcular total
-                }
-                else 
-                {
-                    listIdProducts.Add(itemDetail.ProductId);
-                    //// Agregar un nuevo detalle de venta
-                    //sales.SaleDetails.Add(new SaleDetail 
-                    //{ 
-                    //    IdProduct = itemDetail.ProductId, 
-                    //    Amount = itemDetail.Amount, 
-                    //    PriceOrigin = itemDetail.PriceOrigin
-                    //    Total = itemDetail.Amount * itemDetail.PriceOrigin, // Asumiendo que PriceOrigin está en el request
-                    //});
-                }
 
-            }
+            var listIdProducts = request.Details
+               .Select(d =>
+                {
+                    var newSaleDetail = sales.SaleDetails.FirstOrDefault(x => x.IdProduct == d.ProductId && x.Active);
+                    if(newSaleDetail != null)
+                    {
+                        newSaleDetail.Amount = d.Amount;
+                        newSaleDetail.Total = d.Amount * newSaleDetail.PriceOrigin;
+                    }
+
+                    return d.ProductId;
+                })
+               .Where(id => !sales.SaleDetails.Any(x => x.IdProduct == id))
+               .ToList();
+
+
+
+            //List<int> listIdProducts = new List<int>();
+            //foreach (var itemDetail in request.Details) 
+            //{
+            //    var newSaleDetail = sales.SaleDetails.FirstOrDefault(x => x.IdProduct == itemDetail.ProductId);
+
+            //    if (newSaleDetail != null) 
+            //    {
+            //        // Actualizar el detalle existente
+            //        newSaleDetail.Amount = itemDetail.Amount;
+            //        newSaleDetail.Total = itemDetail.Amount * newSaleDetail.PriceOrigin; // Recalcular total
+            //    }
+            //    else 
+            //    {
+            //        listIdProducts.Add(itemDetail.ProductId);
+            //        //// Agregar un nuevo detalle de venta
+            //        //sales.SaleDetails.Add(new SaleDetail 
+            //        //{ 
+            //        //    IdProduct = itemDetail.ProductId, 
+            //        //    Amount = itemDetail.Amount, 
+            //        //    PriceOrigin = itemDetail.PriceOrigin
+            //        //    Total = itemDetail.Amount * itemDetail.PriceOrigin, // Asumiendo que PriceOrigin está en el request
+            //        //});
+            //    }
+
+            //}
 
             if (listIdProducts.Count > 0) 
             {

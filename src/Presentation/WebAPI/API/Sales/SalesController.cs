@@ -34,11 +34,7 @@ namespace ECommerce.API.API.Sales
         public async Task<IActionResult> GetSaleByIdAsync(int id)
         {
 
-            var response = await _mediator.Send(new GetAllSalesQuery()); // Replace with actual query for single sale
-            if (response == null)
-            {
-                return NotFound(new { Message = "Venta no encontrada" });
-            }
+            var response = await _mediator.Send(new GetSaleByIdQuery(id));
             return Ok(new { Message = "Venta encontrada", Data = response });
         }
 

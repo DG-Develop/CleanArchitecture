@@ -21,7 +21,6 @@
 
   <ItemGroup>
     <Folder Include="Features\Products\" />
-    <Folder Include="Features\SalesAgrregate\Dtos\Request\" />
   </ItemGroup>
 
 </Project>

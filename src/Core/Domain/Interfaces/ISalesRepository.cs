@@ -10,7 +10,7 @@ namespace ECommerce.Domain.Interfaces
     public interface ISalesRepository: IGenericRepository<Sale>
     {
 
-
+        Task<Sale> GetSaleDetails(int idSale);
         
     }
 }

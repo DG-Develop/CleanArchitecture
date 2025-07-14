@@ -1,7 +1,9 @@
-﻿using ECommerce.Application.Features.SalesAgrregate.Commands;
+﻿using ECommerce.API.Extensions;
+using ECommerce.Application.Features.SalesAgrregate.Commands;
 using ECommerce.Application.Features.SalesAgrregate.Dtos.Request;
 using ECommerce.Application.Features.SalesAgrregate.Queries;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,6 +11,7 @@ namespace ECommerce.API.API.Sales
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class SalesController : ControllerBase
     {
 
@@ -24,6 +27,7 @@ namespace ECommerce.API.API.Sales
         [HttpGet]
         public async Task<IActionResult> GetSalesAsync()
         {
+            var userId = User.GetUserId();
             var response = await _mediator.Send(new GetAllSalesQuery());
             return Ok(new { Message = "Lista de ventas", Data = response });
         }

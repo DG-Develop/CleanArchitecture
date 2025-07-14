@@ -114,6 +114,13 @@ public partial class EcommerceDbContext : DbContext
                 .HasConstraintName("FK_SaleDetails_Sales");
         });
 
+        modelBuilder.Entity<Users>(b =>
+        {
+            b.HasKey(u => u.Id);
+            b.Property(u => u.Email).IsRequired();
+            b.Property(u => u.PasswordHash).IsRequired();
+        });
+
         OnModelCreatingPartial(modelBuilder);
     }
 

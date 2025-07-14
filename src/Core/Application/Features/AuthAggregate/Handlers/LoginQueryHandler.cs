@@ -1,4 +1,5 @@
-﻿using ECommerce.Application.Features.AuthAggregate.Queries;
+﻿using ECommerce.Application.Commons.Interfaces;
+using ECommerce.Application.Features.AuthAggregate.Queries;
 using ECommerce.Domain.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -8,10 +9,12 @@ namespace ECommerce.Application.Features.AuthAggregate.Handlers
     public class LoginQueryHandler : IRequestHandler<LoginQuery, string>
     {
         private readonly IUserRepository _userRepository;
+        private readonly IJwtTokenGenerator _jwtTokenGenerator;
 
-        public LoginQueryHandler(IUserRepository userRepository)
+        public LoginQueryHandler(IUserRepository userRepository, IJwtTokenGenerator jwtTokenGenerator)
         {
             _userRepository = userRepository;
+            _jwtTokenGenerator = jwtTokenGenerator;
         }
 
         public async Task<string> Handle(LoginQuery request, CancellationToken cancellationToken)
@@ -23,8 +26,9 @@ namespace ECommerce.Application.Features.AuthAggregate.Handlers
                 throw new UnauthorizedAccessException("Invalid email or password.");
             }
 
-            
-            return "Token"; // Replace with actual token generation logic
+            var token = _jwtTokenGenerator.GenerateToken(user.Id, user.Email);
+
+            return token;
         }
     }
 }

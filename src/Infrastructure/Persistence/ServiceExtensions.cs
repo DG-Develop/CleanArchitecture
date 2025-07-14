@@ -1,6 +1,8 @@
+using ECommerce.Application.Commons.Interfaces;
 using ECommerce.Domain.Interfaces;
 using ECommerce.Persistence.ECommerceDbContext;
 using ECommerce.Persistence.Repositories;
+using ECommerce.Persistence.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,7 +29,8 @@ namespace ECommerce.Persistence
             services.AddScoped(typeof(IGenericRepository<>), typeof (GenericRepository<>));
             services.AddScoped<ISalesRepository, SalesRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
-            
+            services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
+
             return services;
         }
     }

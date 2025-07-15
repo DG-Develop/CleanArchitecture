@@ -27,6 +27,9 @@ namespace ECommerce.API.API.Sales
         [HttpGet]
         public async Task<IActionResult> GetSalesAsync()
         {
+            var user = HttpContext.User;
+            var user2 = user.GetUserId();
+
             var userId = User.GetUserId();
             var response = await _mediator.Send(new GetAllSalesQuery());
             return Ok(new { Message = "Lista de ventas", Data = response });

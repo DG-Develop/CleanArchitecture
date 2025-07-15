@@ -1,14 +1,15 @@
-﻿using ECommerce.Application.Features.SalesAgrregate.Dtos.Response;
+﻿using AutoMapper;
+using ECommerce.Application.Exceptions;
+using ECommerce.Application.Features.SalesAgrregate.Dtos.Response;
 using ECommerce.Application.Features.SalesAgrregate.Queries;
+using ECommerce.Domain.EcommerceDbEntities;
+using ECommerce.Domain.Interfaces;
 using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ECommerce.Domain.Interfaces;
-using ECommerce.Domain.EcommerceDbEntities;
-using AutoMapper;
 
 
 
@@ -27,6 +28,10 @@ namespace ECommerce.Application.Features.SalesAgrregate.Handlers
 
         public async Task<List<SalesDto>> Handle(GetAllSalesQuery request, CancellationToken cancellationToken)
         {
+            //Valitation
+            throw new ApiException("My First Exception Custum");
+
+
             //IdPaymentTypeNavigation
             // Implements to get data from repository
             IQueryable<Sale> response = _repo.GetByFilterInclude(x => x.Active == true, include => include.IdPaymentTypeNavigation);

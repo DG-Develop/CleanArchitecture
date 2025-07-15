@@ -1,3 +1,4 @@
+using ECommerce.API.Middleware;
 using ECommerce.Application;
 using ECommerce.Domain.ValueObject;
 using ECommerce.Persistence;
@@ -36,6 +37,7 @@ app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ECommerce A
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseMiddleware<ErrorHandlerMiddleware>();
 app.MapControllers();
 
 app.Run();

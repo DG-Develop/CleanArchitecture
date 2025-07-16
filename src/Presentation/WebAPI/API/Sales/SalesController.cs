@@ -2,7 +2,7 @@
 using ECommerce.Application.Features.SalesAgrregate.Dtos.Request;
 using ECommerce.Application.Features.SalesAgrregate.Queries;
 using MediatR;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerce.API.API.Sales

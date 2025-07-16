@@ -1,8 +1,14 @@
 using FluentValidation.AspNetCore;
 using ECommerce.Application;
 using ECommerce.Persistence;
+using ECommerce.Domain.ValueObject;
+using ECommerce.Presentation.WebAPI.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.Configure<JwtSettings>(
+        builder.Configuration.GetSection("JwtSettings")
+    );
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
@@ -13,7 +19,9 @@ builder.Services.AddPersistenceServices(builder.Configuration);
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
+builder.Services.AddSwaggerDocumentation();
+builder.Services.AddJwtAuthentication(builder.Configuration);
 
 var app = builder.Build();
 
@@ -23,6 +31,7 @@ app.UseSwagger();
 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ECommerce API V1"));
 
 app.UseHttpsRedirection();
+app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 

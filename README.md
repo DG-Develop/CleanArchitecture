@@ -84,6 +84,11 @@
 - **DDD**: entidades en capa de Domain.
 - **SOLID**: diseño modular, inyección de dependencias.
 
+## 📚 Documentación Adicional
+
+- [**¿Cuándo va una interfaz en el Dominio y cuándo en otra capa?**](docs/CLEAN_ARCHITECTURE_INTERFACES.md) - Guía completa sobre ubicación de interfaces en Clean Architecture
+- [**Comparación Práctica de Interfaces**](docs/INTERFACE_PLACEMENT_COMPARISON.md) - Ejemplos concretos y comparaciones lado a lado
+
 ---
 
 ¡Listo para desarrollar y probar tu ECommerce API! 🚀
